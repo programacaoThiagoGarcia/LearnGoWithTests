@@ -1,37 +1,67 @@
 package main
 
-import "fmt"
+import (
+	"strings"
+)
 
 func main() {
-	fmt.Println(Hello("world", ""))
+
 }
 
-const englishPrefix = "Hello, "
-const spanishPrefix = "Hola, "
-const frenchPrefix = "Bonjour, "
-const spanishSufix = "Mundo"
-const frenchSufix = "Monde"
-const englishSufix = "World"
+const (
+	englishPrefix = "Hello, "
+	spanishPrefix = "Hola, "
+	frenchPrefix  = "Bonjour, "
+	spanishSufix  = "Mundo"
+	frenchSufix   = "Monde"
+	englishSufix  = "World"
+)
+
+const (
+	english = "english"
+	french  = "french"
+	spanish = "spanish"
+)
 
 func Hello(name, language string) string {
 
-	if language == "French" {
-		if name == "" {
-			name = frenchSufix
-		}
-		return frenchPrefix + name + "!"
+	return greetingPrefix(language) + managerName(language, name) + "!"
+}
+
+func greetingPrefix(language string) string {
+	var prefix = ""
+	language = strings.ToLower(language)
+
+	switch language {
+	case english:
+		prefix = englishPrefix
+	case french:
+		prefix = frenchPrefix
+	case spanish:
+		prefix = spanishPrefix
+	default:
+		prefix = englishPrefix
+	}
+	return prefix
+}
+
+func managerName(language, name string) string {
+	if name != "" {
+		return name
 	}
 
-	if language == "Spanish" {
-		if name == "" {
-			name = spanishSufix
-		}
-		return spanishPrefix + name + "!"
-	}
+	var sufix = ""
+	language = strings.ToLower(language)
 
-	if name == "" {
-		name = englishSufix
+	switch language {
+	case english:
+		sufix = englishSufix
+	case french:
+		sufix = frenchSufix
+	case spanish:
+		sufix = spanishSufix
+	default:
+		sufix = englishSufix
 	}
-
-	return englishPrefix + name + "!"
+	return sufix
 }
